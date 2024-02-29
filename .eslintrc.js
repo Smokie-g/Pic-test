@@ -4,5 +4,6 @@ module.exports = {
   rules: {
     semi: [2, 'never'],
     'jsx-quotes': [2, 'prefer-single'],
+    curly: 0,
   },
 }

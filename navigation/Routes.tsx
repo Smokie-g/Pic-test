@@ -19,7 +19,7 @@ export const Routes: React.FC<IProps> = ({ navigationRef }) => {
         <Stack.Screen
           component={MainScreen}
           name='MainScreen'
-          options={{ headerShown: false }}
+          options={{ title: '' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
