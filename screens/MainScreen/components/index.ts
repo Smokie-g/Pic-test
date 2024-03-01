@@ -1,2 +1,2 @@
-export { RoomForm } from './RoomForm'
+export { FlatForm } from './FlatForm'
 export { Header } from './Header'

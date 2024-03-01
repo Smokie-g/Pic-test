@@ -17,6 +17,7 @@ import {
 import { IFormInputs } from '../MainScreen'
 
 interface IProps {
+  isSending: boolean
   onSubmit(data: IFormInputs): void
 }
 
@@ -26,7 +27,7 @@ const schema = yup.object().shape({
     .required(REQUIRED_MESSAGE)
     .matches(validation.nameValidation, WRONG_SYMBOLS_MESSAGE)
     .max(32, MAX_SYMBOLS_USER_NAME),
-  secondName: yup
+  lastName: yup
     .string()
     .required(REQUIRED_MESSAGE)
     .matches(validation.nameValidation, WRONG_SYMBOLS_MESSAGE)
@@ -48,7 +49,7 @@ const schema = yup.object().shape({
     .required(REQUIRED_MESSAGE)
     .matches(validation.phoneValidation, WRONG_PHONE)
     .min(10, WRONG_PHONE),
-  roomCount: yup.string().required(REQUIRED_MESSAGE),
+  flatsCount: yup.string().required(REQUIRED_MESSAGE),
 })
 
 const InputContainer = styled.View`
@@ -58,11 +59,11 @@ const InputContainer = styled.View`
   gap: 24px;
 `
 
-export const RoomForm: FC<IProps> = ({ onSubmit }) => {
-  const [roomValue, setRoomValue] = useState<number>(0)
+export const FlatForm: FC<IProps> = ({ isSending, onSubmit }) => {
+  const [flatValue, setflatValue] = useState<number>(0)
 
-  const buttonTitle = `Забронировать ${roomValue} ${getFormattedString(
-    roomValue,
+  const buttonTitle = `Забронировать ${flatValue} ${getFormattedString(
+    flatValue,
     ['квартиру', 'квартиры', 'квартир'],
   )}`
 
@@ -78,11 +79,11 @@ export const RoomForm: FC<IProps> = ({ onSubmit }) => {
   const handleChange = (
     e: NativeSyntheticEvent<TextInputChangeEventData>,
     onChange: (e: NativeSyntheticEvent<TextInputChangeEventData>) => void,
-    field: 'firstName' | 'secondName' | 'email' | 'phone' | 'roomCount',
+    field: 'firstName' | 'lastName' | 'email' | 'phone' | 'flatsCount',
   ) => {
-    if (field === 'roomCount') {
-      const rooms = e as unknown as number
-      setRoomValue(rooms)
+    if (field === 'flatsCount') {
+      const flats = e as unknown as number
+      setflatValue(flats)
     }
 
     onChange(e)
@@ -119,21 +120,21 @@ export const RoomForm: FC<IProps> = ({ onSubmit }) => {
 
         <Controller
           control={control}
-          name='secondName'
+          name='lastName'
           render={({ field }) => {
             const { onChange, onBlur, value } = field
 
             return (
               <Input
                 autoCapitalize='words'
-                errorMessage={errors.secondName}
-                isValid={!errors.secondName}
+                errorMessage={errors.lastName}
+                isValid={!errors.lastName}
                 placeholder='Фамилия'
                 type='default'
                 value={value}
                 onBlur={onBlur}
-                onChange={e => handleChange(e, onChange, 'secondName')}
-                onFocus={() => clearErrors('secondName')}
+                onChange={e => handleChange(e, onChange, 'lastName')}
+                onFocus={() => clearErrors('lastName')}
               />
             )
           }}
@@ -187,28 +188,33 @@ export const RoomForm: FC<IProps> = ({ onSubmit }) => {
 
         <Controller
           control={control}
-          name='roomCount'
+          name='flatsCount'
           render={({ field }) => {
             const { onChange, onBlur, value } = field
 
             return (
               <Input
-                errorMessage={errors.roomCount}
-                isValid={!errors.roomCount}
+                errorMessage={errors.flatsCount}
+                isValid={!errors.flatsCount}
                 placeholder='Количество помещений'
-                type='roomCount'
+                type='flatsCount'
                 value={value}
                 onBlur={onBlur}
-                onChange={e => handleChange(e, onChange, 'roomCount')}
-                onFocus={() => clearErrors('roomCount')}
+                onChange={e => handleChange(e, onChange, 'flatsCount')}
+                onFocus={() => clearErrors('flatsCount')}
               />
             )
           }}
           rules={{ required: true }}
         />
       </InputContainer>
-      {Boolean(roomValue) && (
-        <Button title={buttonTitle} onPress={handleSubmit(onSubmit)} />
+      {Boolean(flatValue) && (
+        <Button
+          disable={isSending}
+          isLoading={isSending}
+          title={buttonTitle}
+          onPress={handleSubmit(onSubmit)}
+        />
       )}
     </>
   )

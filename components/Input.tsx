@@ -13,7 +13,7 @@ import { Container } from '../styles'
 interface IInputProps {
   errorMessage?: FieldError
   isValid: boolean
-  type: 'default' | 'roomCount' | 'phone'
+  type: 'default' | 'flatsCount' | 'phone'
   onChange(e: NativeSyntheticEvent<TextInputChangeEventData>): void
   onBlur(): void
   onFocus(): void
@@ -82,7 +82,7 @@ export const Input: FC<Props> = ({
         />
       )}
 
-      {type === 'roomCount' && (
+      {type === 'flatsCount' && (
         <StyledInput
           errorMessage={Boolean(errorMessage)}
           isFocused={isFocused}

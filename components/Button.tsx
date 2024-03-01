@@ -1,8 +1,11 @@
 import React from 'react'
+import { ActivityIndicator } from 'react-native'
 import styled from 'styled-components/native'
 
 interface IProps {
   title: string
+  disable?: boolean
+  isLoading?: boolean
   onPress(): void
 }
 
@@ -19,8 +22,17 @@ const ButtonText = styled.Text`
   color: white;
 `
 
-export const Button: React.FC<IProps> = ({ title, onPress }) => (
-  <ButtonContainer onPress={onPress}>
-    <ButtonText>{title}</ButtonText>
+export const Button: React.FC<IProps> = ({
+  title,
+  disable,
+  isLoading,
+  onPress,
+}) => (
+  <ButtonContainer disabled={disable} onPress={onPress}>
+    {isLoading ? (
+      <ActivityIndicator animating={true} color='white' size='small' />
+    ) : (
+      <ButtonText>{title}</ButtonText>
+    )}
   </ButtonContainer>
 )
