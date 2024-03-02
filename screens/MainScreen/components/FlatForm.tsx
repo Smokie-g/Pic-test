@@ -77,8 +77,10 @@ export const FlatForm: FC<IProps> = ({ isSending, onSubmit }) => {
   })
 
   const handleChange = (
-    e: NativeSyntheticEvent<TextInputChangeEventData>,
-    onChange: (e: NativeSyntheticEvent<TextInputChangeEventData>) => void,
+    e: NativeSyntheticEvent<TextInputChangeEventData> | string,
+    onChange: (
+      e: NativeSyntheticEvent<TextInputChangeEventData> | string,
+    ) => void,
     field: 'firstName' | 'lastName' | 'email' | 'phone' | 'flatsCount',
   ) => {
     if (field === 'flatsCount') {
@@ -102,7 +104,9 @@ export const FlatForm: FC<IProps> = ({ isSending, onSubmit }) => {
             return (
               <Input
                 autoCapitalize='words'
+                errors={errors}
                 errorMessage={errors.firstName}
+                fieldName='firstName'
                 isValid={!errors.firstName}
                 placeholder='Ваше имя'
                 type='default'
@@ -127,7 +131,9 @@ export const FlatForm: FC<IProps> = ({ isSending, onSubmit }) => {
             return (
               <Input
                 autoCapitalize='words'
+                errors={errors}
                 errorMessage={errors.lastName}
+                fieldName='lastName'
                 isValid={!errors.lastName}
                 placeholder='Фамилия'
                 type='default'
@@ -149,7 +155,9 @@ export const FlatForm: FC<IProps> = ({ isSending, onSubmit }) => {
 
             return (
               <Input
+                errors={errors}
                 errorMessage={errors.phone}
+                fieldName='phone'
                 isValid={!errors.phone}
                 // isValid={validPhone(value)}
                 placeholder='Телефон'
@@ -172,7 +180,9 @@ export const FlatForm: FC<IProps> = ({ isSending, onSubmit }) => {
 
             return (
               <Input
+                errors={errors}
                 errorMessage={errors.email}
+                fieldName='email'
                 isValid={!errors.email}
                 placeholder='E-mail'
                 type='default'
@@ -194,7 +204,9 @@ export const FlatForm: FC<IProps> = ({ isSending, onSubmit }) => {
 
             return (
               <Input
+                errors={errors}
                 errorMessage={errors.flatsCount}
+                fieldName='flatsCount'
                 isValid={!errors.flatsCount}
                 placeholder='Количество помещений'
                 type='flatsCount'

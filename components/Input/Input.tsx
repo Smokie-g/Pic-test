@@ -6,15 +6,21 @@ import {
   TextInputChangeEventData,
 } from 'react-native'
 import styled from 'styled-components/native'
-import { FieldError } from 'react-hook-form'
+import { FieldError, FieldErrors } from 'react-hook-form'
+import { ErrorMessage } from '@hookform/error-message'
+
 import TextInputMask from 'react-native-text-input-mask'
-import { Container } from '../styles'
+import { Container } from '../../styles'
+import { palette } from '../../utils'
+import { InputErrorField } from './components'
 
 interface IInputProps {
   errorMessage?: FieldError
+  errors: FieldErrors<IInputProps>
+  fieldName: string
   isValid: boolean
   type: 'default' | 'flatsCount' | 'phone'
-  onChange(e: NativeSyntheticEvent<TextInputChangeEventData>): void
+  onChange(e: NativeSyntheticEvent<TextInputChangeEventData> | string): void
   onBlur(): void
   onFocus(): void
 }
@@ -22,15 +28,16 @@ interface IInputProps {
 type Props = IInputProps & TextInputProps
 
 const getBorderColor = (errorMessage: boolean) => {
-  if (errorMessage) return '#eb5757'
+  if (errorMessage) return palette.ERROR_RED
 
-  return '#f7f4f4'
+  return palette.LIGHT_GREY
 }
 
 const CreateStyledInput = (
   Input: typeof TextInput | typeof TextInputMask,
 ) => styled<any>(Input)`
-  background-color: ${({ isFocused }) => (isFocused ? '#ffffff' : '#f7f4f4')};
+  background-color: ${({ isFocused }) =>
+    isFocused ? palette.WHITE : palette.LIGHT_GREY};
   height: 56px;
   padding-left: 16px;
   padding-right: 42px;
@@ -45,13 +52,15 @@ const StyledInputMask = CreateStyledInput(TextInputMask)
 
 export const Input: FC<Props> = ({
   errorMessage,
-  onChange = () => {},
-  onBlur = () => {},
-  onFocus = () => {},
+  errors,
+  fieldName,
   type = 'default',
   autoFocus,
   value,
   placeholder,
+  onChange = () => {},
+  onBlur = () => {},
+  onFocus = () => {},
   ...props
 }) => {
   const [isFocused, setIsFocused] = useState<boolean>(false)
@@ -113,12 +122,18 @@ export const Input: FC<Props> = ({
           textContentType='telephoneNumber'
           value={value}
           onBlur={handleBlur}
-          onChangeText={(_formatted: any, extracted: any) =>
+          onChangeText={(_formatted: string, extracted: string) =>
             onChange(extracted)
           }
           onFocus={handleFocus}
         />
       )}
+
+      <ErrorMessage
+        errors={errors}
+        name={fieldName}
+        render={({ message }) => <InputErrorField errorMessage={message} />}
+      />
     </Container>
   )
 }

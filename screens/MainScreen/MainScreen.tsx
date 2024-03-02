@@ -6,7 +6,12 @@ import dayjs from 'dayjs'
 import { Loader } from '../../components'
 import { RootState, setSlidersList, setFlatOrder } from '../../services'
 import { Container } from '../../styles'
-import { IS_IOS, SLIDERS_GET_URL, FLAT_DATA_POST_URL } from '../../utils'
+import {
+  IS_IOS,
+  SLIDERS_GET_URL,
+  FLAT_DATA_POST_URL,
+  palette,
+} from '../../utils'
 import { FlatForm, Header } from './components'
 
 export interface IFormInputs {
@@ -28,7 +33,7 @@ const DisclaimerContainer = styled.View`
 `
 const DisclaimerText = styled.Text`
   font-size: 12px;
-  color: #8f9094;
+  color: ${palette.GREY};
 `
 
 export const MainScreen: FC = () => {
@@ -52,7 +57,6 @@ export const MainScreen: FC = () => {
       }
     } catch (error) {
       console.error(error)
-      // Alert.alert('При загрузке данных произошла ошибка')
     } finally {
       setIsLoading(false)
     }
@@ -72,16 +76,10 @@ export const MainScreen: FC = () => {
 
       if (res.status === 200) {
         dispatch(setFlatOrder(flatData))
-        Alert.alert(
-          'Данные успешно отправлены!',
-          'В ближайшее время с Вами свяжутся',
-        )
+        Alert.alert('Ваша заявка отправлена')
       }
     } catch (error) {
-      Alert.alert(
-        'Во время отправки произошла ошибка',
-        'Повторите попытку позже',
-      )
+      Alert.alert('Ошибка.', 'Попробуйте позже')
     } finally {
       setIsSending(false)
     }
@@ -118,7 +116,7 @@ export const MainScreen: FC = () => {
   }, [sliders])
 
   return (
-    <Container color='white'>
+    <Container color={palette.WHITE}>
       {isLoading ? (
         <Loader />
       ) : (
