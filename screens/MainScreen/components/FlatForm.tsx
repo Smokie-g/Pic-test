@@ -12,9 +12,9 @@ import {
   WRONG_PHONE,
   WRONG_SYMBOLS_MESSAGE,
   validation,
-  getFormattedString,
 } from '../../../utils'
 import { IFormInputs } from '../MainScreen'
+import { getButtonTitle } from '../utils'
 
 interface IProps {
   isSending: boolean
@@ -58,14 +58,12 @@ const InputContainer = styled.View`
   margin-bottom: 24px;
   gap: 24px;
 `
+const ButtonWrapper = styled.View`
+  margin-bottom: 16px;
+`
 
 export const FlatForm: FC<IProps> = ({ isSending, onSubmit }) => {
-  const [flatValue, setflatValue] = useState<number>(0)
-
-  const buttonTitle = `Забронировать ${flatValue} ${getFormattedString(
-    flatValue,
-    ['квартиру', 'квартиры', 'квартир'],
-  )}`
+  const [flatValue, setflatValue] = useState<string>('')
 
   const {
     control,
@@ -84,8 +82,7 @@ export const FlatForm: FC<IProps> = ({ isSending, onSubmit }) => {
     field: 'firstName' | 'lastName' | 'email' | 'phone' | 'flatsCount',
   ) => {
     if (field === 'flatsCount') {
-      const flats = e as unknown as number
-      setflatValue(flats)
+      setflatValue(e.toString())
     }
 
     onChange(e)
@@ -220,14 +217,16 @@ export const FlatForm: FC<IProps> = ({ isSending, onSubmit }) => {
           rules={{ required: true }}
         />
       </InputContainer>
-      {Boolean(flatValue) && (
+      {/* {Boolean(flatValue) && ( */}
+      <ButtonWrapper>
         <Button
           disable={isSending}
           isLoading={isSending}
-          title={buttonTitle}
+          title={getButtonTitle(flatValue)}
           onPress={handleSubmit(onSubmit)}
         />
-      )}
+      </ButtonWrapper>
+      {/* )} */}
     </>
   )
 }

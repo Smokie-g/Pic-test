@@ -13,6 +13,7 @@ import {
   palette,
 } from '../../utils'
 import { FlatForm, Header } from './components'
+import { getContainerPaddingBottom } from './utils'
 
 export interface IFormInputs {
   firstName: string
@@ -22,6 +23,9 @@ export interface IFormInputs {
   flatsCount: string
 }
 
+const StyledSafeAreaView = styled.SafeAreaView`
+  flex: 1;
+`
 const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView)`
   flex: 1;
   padding-horizontal: 16px;
@@ -29,7 +33,7 @@ const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView)`
 const DisclaimerContainer = styled.View`
   align-items: center;
   justify-content: center;
-  margin-top: 16px;
+  /* margin-top: 16px; */
 `
 const DisclaimerText = styled.Text`
   font-size: 12px;
@@ -122,16 +126,27 @@ export const MainScreen: FC = () => {
       ) : (
         <>
           <Header />
-          <StyledKeyboardAvoidingView behavior={IS_IOS ? 'padding' : 'height'}>
-            <ScrollView keyboardShouldPersistTaps='handled'>
-              <FlatForm isSending={isSending} onSubmit={onSubmit} />
-              <DisclaimerContainer>
-                <DisclaimerText>
-                  Это дисклеймер, который есть во всех формах
-                </DisclaimerText>
-              </DisclaimerContainer>
-            </ScrollView>
-          </StyledKeyboardAvoidingView>
+          <StyledSafeAreaView>
+            <StyledKeyboardAvoidingView
+              behavior={IS_IOS ? 'padding' : 'height'}
+            >
+              <ScrollView
+                automaticallyAdjustKeyboardInsets
+                contentContainerStyle={{
+                  paddingBottom: getContainerPaddingBottom(),
+                }}
+                keyboardShouldPersistTaps='handled'
+                showsVerticalScrollIndicator={false}
+              >
+                <FlatForm isSending={isSending} onSubmit={onSubmit} />
+                <DisclaimerContainer>
+                  <DisclaimerText>
+                    Это дисклеймер, который есть во всех формах
+                  </DisclaimerText>
+                </DisclaimerContainer>
+              </ScrollView>
+            </StyledKeyboardAvoidingView>
+          </StyledSafeAreaView>
         </>
       )}
     </Container>

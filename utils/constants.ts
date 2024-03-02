@@ -1,6 +1,16 @@
-import { Platform } from 'react-native'
+import { Platform, Dimensions } from 'react-native'
 
 export const IS_IOS = Platform.OS === 'ios'
+export const IS_ANDROID = Platform.OS === 'android'
+
+const { width, height } = Dimensions.get('window')
+const screenHeight = Dimensions.get('screen').height
+
+export const FULL_WIDTH = width
+export const FULL_HEIGHT = height
+
+export const IPHONE_MEDIUM = IS_IOS && FULL_HEIGHT > 568 && FULL_HEIGHT <= 768
+export const ANDROID_MEDIUM = IS_ANDROID && screenHeight <= 768
 
 export const REQUIRED_MESSAGE = 'Это обязательное поле'
 export const WRONG_PHONE = 'Введите корректный номер'
