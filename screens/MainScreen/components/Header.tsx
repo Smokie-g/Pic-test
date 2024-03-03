@@ -1,13 +1,15 @@
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
+import { MEDIUM_DEVICE } from '../../../utils'
 import { getTitle } from '../utils'
 
+const DESCRIPTION = 'Для бронирования помещений\nзаполните форму'
+
 const HeaderWrapper = styled.View`
-  padding-top: 16px;
-  padding-bottom: 40px;
+  margin-top: ${MEDIUM_DEVICE ? '8px' : '16px'};
 `
 const TextWrapper = styled.View`
-  gap: 16px;
+  gap: ${MEDIUM_DEVICE ? '8px' : '16px'};
   align-items: center;
   justify-content: center;
   padding-horizontal: 32px;
@@ -25,7 +27,7 @@ export const Header: FC = () => (
   <HeaderWrapper>
     <TextWrapper>
       <Title>{getTitle()}</Title>
-      <BaseText>Для бронирования помещений заполните форму</BaseText>
+      <BaseText>{DESCRIPTION}</BaseText>
     </TextWrapper>
   </HeaderWrapper>
 )

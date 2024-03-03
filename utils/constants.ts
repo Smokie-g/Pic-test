@@ -11,6 +11,8 @@ export const FULL_HEIGHT = height
 
 export const IPHONE_MEDIUM = IS_IOS && FULL_HEIGHT > 568 && FULL_HEIGHT <= 768
 export const ANDROID_MEDIUM = IS_ANDROID && screenHeight <= 768
+export const SMALL_ANDROID = IS_ANDROID && FULL_HEIGHT <= 620
+export const MEDIUM_DEVICE = IPHONE_MEDIUM || ANDROID_MEDIUM
 
 export const REQUIRED_MESSAGE = 'Это обязательное поле'
 export const WRONG_PHONE = 'Введите корректный номер'

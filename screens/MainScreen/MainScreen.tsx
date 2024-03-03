@@ -33,12 +33,12 @@ const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView)`
 const DisclaimerContainer = styled.View`
   align-items: center;
   justify-content: center;
-  /* margin-top: 16px; */
 `
 const DisclaimerText = styled.Text`
   font-size: 12px;
   color: ${palette.GREY};
 `
+const CUSTOM_CONTAINER_STYLE = `padding-top: ${IS_IOS ? '56px' : '24px'}`
 
 export const MainScreen: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -120,7 +120,7 @@ export const MainScreen: FC = () => {
   }, [sliders])
 
   return (
-    <Container color={palette.WHITE}>
+    <Container color={palette.WHITE} customStyle={CUSTOM_CONTAINER_STYLE}>
       {isLoading ? (
         <Loader />
       ) : (

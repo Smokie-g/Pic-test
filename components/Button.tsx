@@ -1,7 +1,7 @@
 import React from 'react'
 import { ActivityIndicator } from 'react-native'
 import styled from 'styled-components/native'
-import { palette } from '../utils'
+import { palette, SMALL_ANDROID } from '../utils'
 
 interface IProps {
   title: string
@@ -12,7 +12,7 @@ interface IProps {
 
 const ButtonContainer = styled.TouchableOpacity`
   background-color: ${palette.ORANGE};
-  height: 56px;
+  height: ${SMALL_ANDROID ? '48px' : '56px'};
   border-radius: 4px;
   align-items: center;
   justify-content: center;

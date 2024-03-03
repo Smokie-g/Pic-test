@@ -11,7 +11,7 @@ import { ErrorMessage } from '@hookform/error-message'
 
 import TextInputMask from 'react-native-text-input-mask'
 import { Container } from '../../styles'
-import { palette } from '../../utils'
+import { palette, SMALL_ANDROID } from '../../utils'
 import { InputErrorField } from './components'
 
 interface IInputProps {
@@ -38,7 +38,7 @@ const CreateStyledInput = (
 ) => styled<any>(Input)`
   background-color: ${({ isFocused }) =>
     isFocused ? palette.WHITE : palette.LIGHT_GREY};
-  height: 56px;
+  height: ${SMALL_ANDROID ? '48px' : '56px'};
   padding-left: 16px;
   padding-right: 42px;
   border-width: 1px;

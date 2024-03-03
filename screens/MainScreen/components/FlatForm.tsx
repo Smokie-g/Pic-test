@@ -12,6 +12,7 @@ import {
   WRONG_PHONE,
   WRONG_SYMBOLS_MESSAGE,
   validation,
+  MEDIUM_DEVICE,
 } from '../../../utils'
 import { IFormInputs } from '../MainScreen'
 import { getButtonTitle } from '../utils'
@@ -54,12 +55,12 @@ const schema = yup.object().shape({
 
 const InputContainer = styled.View`
   flex: 1;
-  margin-top: 16px;
+  margin-top: ${MEDIUM_DEVICE ? '16px' : '56px'};
   margin-bottom: 24px;
   gap: 24px;
 `
 const ButtonWrapper = styled.View`
-  margin-bottom: 16px;
+  margin-bottom: ${MEDIUM_DEVICE ? '8px' : '16px'};
 `
 
 export const FlatForm: FC<IProps> = ({ isSending, onSubmit }) => {
